@@ -1,0 +1,62 @@
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="fw-bold">Available Buses</h3>
+      <div>
+        <button class="btn btn-outline-primary me-2">Filter</button>
+        <button class="btn btn-outline-primary">
+          <i class="fa fa-sort me-1"></i>Sort
+        </button>
+      </div>
+    </div>
+  
+    @if (searchData.length === 0) {
+      <div class="text-center text-muted">
+        <p>No buses found for the selected route and date.</p>
+      </div>
+    }
+  
+    @for (bus of searchData; track bus.busName) {
+      <div class="bg-white rounded-4 shadow-sm p-4 mb-4 d-flex justify-content-between align-items-center flex-wrap">
+        <div class="d-flex flex-column flex-grow-1">
+          <h5 class="fw-bold mb-1">
+            <i class="fa fa-bus me-2 text-primary"></i>{{ bus.busName }}
+          </h5>
+          <small class="text-muted">
+            <i class="fa fa-bed me-2"></i>AC Sleeper
+          </small>
+          <div class="mt-2">
+            <span class="badge bg-success me-2"><i class="fa fa-star me-1"></i>4.5</span>
+            <span class="badge bg-info text-dark">Fast</span>
+          </div>
+        </div>
+  
+        <div class="d-flex flex-wrap text-center justify-content-center flex-grow-1 gap-4 mt-3 mt-lg-0">
+          <div>
+            <div class="fw-semibold">Departure</div>
+            <div><i class="fa fa-clock me-1"></i>{{ formatTime(bus.departureTime) }}</div>
+          </div>
+          <div>
+            <div class="fw-semibold">Duration</div>
+            <div>{{ getDuration(bus.departureTime, bus.arrivalTime) }}</div>
+          </div>
+          <div>
+            <div class="fw-semibold">Arrival</div>
+            <div><i class="fa fa-clock me-1"></i>{{ formatTime(bus.arrivalTime) }}</div>
+          </div>
+          <div>
+            <div class="fw-semibold">Price</div>
+            <div><i class="fa fa-money-bill-alt me-1"></i>₹{{ bus.price }}</div>
+            <small class="text-success fw-semibold">$ Best Price</small>
+          </div>
+        </div>
+  
+        <div>
+          <button class="btn btn-primary rounded-3 ms-3" [routerLink]="['/book-ticket', bus.scheduleId]">
+            <i class="fa fa-arrow-right"></i>
+          </button>
+          
+        </div>
+      </div>
+    }
+  </div>
+  
